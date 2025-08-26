@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/react": "latest",
     "typescript": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest"
