@@ -108,6 +108,7 @@ export async function getAccessToken(assertion: string, tokenUri: string): Promi
       body: new URLSearchParams({
         grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
         assertion: assertion,
+        scope: 'customers',
       }),
     });
 
