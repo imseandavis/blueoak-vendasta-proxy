@@ -117,12 +117,35 @@ Creates a new contact or updates an existing one based on search criteria. This 
 The following environment variables must be configured:
 
 - `CLIENT_MAP_JSON`: JSON mapping of API keys to business IDs
-- `VEND_API_KEY`: Vendasta API authentication key
+- `VEND_SERVICE_ACCOUNT_JSON`: Complete Google Service Account JSON file content (for JWT authentication)
 - `VEND_CONTACTS_CREATE_URL`: Vendasta contacts create endpoint URL
 - `VEND_CONTACTS_UPDATE_URL`: Vendasta contacts update endpoint URL
 - `VEND_CONTACTS_DELETE_URL`: Vendasta contacts delete endpoint URL
 - `VEND_CONTACTS_GET_URL`: Vendasta contacts get endpoint URL
 - `VEND_CONTACTS_UPSERT_URL`: Vendasta contacts upsert endpoint URL
+
+## Authentication Setup
+
+The API uses a two-step OAuth 2.0 JWT Bearer flow with Google Service Account credentials:
+
+### Step 1: Generate JWT Assertion
+The system creates a JWT assertion using your service account credentials:
+- **Issuer (iss)**: Your service account email
+- **Subject (sub)**: Your service account email  
+- **Audience (aud)**: The token URI from your service account JSON
+- **Expiration**: 5 minutes from generation
+- **Algorithm**: RS256
+- **Additional claims**: `nbf` (not before), `jti` (unique identifier)
+
+### Step 2: Exchange for Access Token
+The JWT assertion is exchanged for an access token using the OAuth 2.0 token endpoint.
+
+### Required Fields in Service Account JSON:
+- `private_key`: The private key for signing JWT assertions
+- `client_email`: The service account email (used as issuer and subject)
+- `private_key_id`: Key ID for the JWT header
+- `token_uri`: The OAuth 2.0 token endpoint URL
+- Other standard Google Service Account fields
 
 ## Error Handling
 

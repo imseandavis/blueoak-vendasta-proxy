@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
+import { getVendastaAuthToken } from "../../../../../utils/vendasta-auth-vercel-secure";
 
 export const runtime = "nodejs"; 
 
@@ -42,7 +43,9 @@ function authenticateAndResolveBusinessId(req: Request): { businessId: string; c
 }
 
 function assertVendastaSecrets() {
-  if (!process.env.VEND_API_KEY) throw new Error("Missing VEND_API_KEY");
+  if (!process.env.VEND_SERVICE_ACCOUNT_SECRET) {
+    throw new Error("Missing VEND_SERVICE_ACCOUNT_SECRET - please add as Vercel Secret");
+  }
   if (!process.env.VEND_CONTACTS_DELETE_URL) throw new Error("Missing VEND_CONTACTS_DELETE_URL");
 }
 
@@ -71,11 +74,12 @@ export async function DELETE(req: NextRequest) {
     // (3) Inject businessId server-side (ignore any businessId in body if present)
     const vendPayload = { ...parsed, businessId };
 
-    // (4) Call Vendasta
+    // (4) Generate JWT token and call Vendasta
+    const authToken = await getVendastaAuthToken();
     const r = await fetch(process.env.VEND_CONTACTS_DELETE_URL!, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${process.env.VEND_API_KEY}`,
+        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(vendPayload),
