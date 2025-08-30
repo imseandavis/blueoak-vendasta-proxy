@@ -64,13 +64,6 @@ export default function Page() {
         while errors return an error object with a descriptive message.
       </p>
 
-      <h2>Error Codes</h2>
-      <ul>
-        <li><strong>401</strong> - Missing or invalid API key</li>
-        <li><strong>403</strong> - Insufficient permissions</li>
-        <li><strong>400</strong> - Invalid request format</li>
-        <li><strong>500</strong> - Internal server error</li>
-      </ul>
     </main>
   );
 }
