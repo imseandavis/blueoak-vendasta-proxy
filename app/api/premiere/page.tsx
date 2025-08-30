@@ -54,7 +54,8 @@ export default function Page() {
         <li>(PENDING V2 Approval) <strong>POST /api/premiere/contacts/create</strong> - Create a new contact</li>
         <li>(PENDING V2 Approval) <strong>PUT /api/premiere/contacts/update</strong> - Update an existing contact</li>
         <li>(PENDING V2 Approval) <strong>DELETE /api/premiere/contacts/delete</strong> - Delete a contact</li>
-        <li>(PENDING V2 Approval) <strong>GET /api/premiere/contacts/get</strong> - Retrieve contacts</li>
+        <li>(PENDING V2 Approval) <strong>GET /api/premiere/contacts/get</strong> - Get a contact</li>
+        <li>(PENDING V2 Approval) <strong>POST /api/premiere/contacts/list</strong> - List contacts based on filter</li>
       </ul>
 
       <h2>Response Format</h2>
