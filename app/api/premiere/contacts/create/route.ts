@@ -1,13 +1,7 @@
-// app/api/contacts/route.ts
-// Minimal, production-ready multi-tenant endpoint for Vercel (Next.js App Router)
-// - Scopes each request to exactly one Vendasta businessId based on an API key header
-// - No rate limiting
-// - No single-tenant vanity routes
-//
 import { NextRequest } from "next/server";
 import { z } from "zod";
 
-export const runtime = "nodejs"; // change to "edge" only if your Vendasta endpoint supports it
+export const runtime = "nodejs"; 
 
 // ---------- Auth & Config helpers ----------
 type ClientMap = Record<string, { businessId: string; label?: string }>;
@@ -111,17 +105,3 @@ export async function POST(req: NextRequest) {
     });
   }
 }
-
-// (Optional) Basic CORS support if your client calls from a different origin.
-// Uncomment and adapt if needed.
-// export async function OPTIONS() {
-//   return new Response(null, {
-//     status: 204,
-//     headers: {
-//       "Access-Control-Allow-Origin": "*",            // tighten in prod
-//       "Access-Control-Allow-Methods": "POST, OPTIONS",
-//       "Access-Control-Allow-Headers": "Content-Type, x-client-key",
-//       "Access-Control-Max-Age": "86400",
-//     },
-//   });
-// }
